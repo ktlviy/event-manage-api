@@ -1,0 +1,78 @@
+### Test: Register a new user
+# @name register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "TestPassword123!"
+}
+
+### Test: Login with registered user
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPassword123!"
+}
+
+### Test: Logout with logged in user
+POST http://localhost:3000/auth/logout
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+### create a new event
+POST http://localhost:3000/events
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+{
+    "name": "Test Event",
+    "description": "This is a test event",  
+    "date": "2025-07-01T12:00:00Z",
+    "location": "Test Location",
+    "maxParticipants": 1
+}
+
+### get all events
+GET http://localhost:3000/events
+
+### get an event by id
+GET http://localhost:3000/events/2
+
+### update an event
+PATCH  http://localhost:3000/events/3
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+{
+    "name": "Updated Event",
+    "description": "This is an updated event",
+    "date": "2025-07-02T12:00:00Z",
+    "location": "Updated Location",
+    "maxParticipants": 15
+}
+
+### delete an event
+DELETE http://localhost:3000/events/4
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+### Test: Join user to event
+POST http://localhost:3000/participants/join
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+{
+    "eventId": 7,
+    "userId": "$2b$10$v1lvVC.gwtkWMYmxaLRrS.kgomBdPoRtYTyX5hsuUBEmsfIN96o1q"
+}
+
+### get all participants for an event
+GET http://localhost:3000/participants/event/1
+Authorization: Bearer {{login.response.body.data.access_token}}
+
+### get all events for a user
+GET http://localhost:3000/participants/user/cmcix3m610000iko4nt97cl0p
+Authorization: Bearer {{login.response.body.data.access_token}}
