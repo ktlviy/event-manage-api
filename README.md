@@ -32,7 +32,7 @@ A modern, secure, and scalable event management REST API built with [NestJS](htt
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/event-manage-app.git
+git clone https://github.com/ktlviy/event-manage-app.git
 cd event-manage-app
 ```
 
